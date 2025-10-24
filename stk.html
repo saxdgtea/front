@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mpesa STK Push</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: #f4f4f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      h2 {
+        text-align: center;
+        color: #222;
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        margin-bottom: 1.2rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      input:focus {
+        border-color: #28a745;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+
+      .message {
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      .success {
+        color: #28a745;
+      }
+
+      .error {
+        color: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Mpesa STK Push</h2>
+      <form id="stkForm">
+        <label for="amount">Amount (Ksh)</label>
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          placeholder="Enter amount"
+          required
+        />
+
+        <label for="phone">Phone Number</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="e.g. 2547XXXXXXXX"
+          required
+        />
+
+        <button type="submit">Pay Now</button>
+      </form>
+
+      <div class="message" id="responseMsg"></div>
+    </div>
+
+    <script>
+      const form = document.getElementById("stkForm");
+      const msgDiv = document.getElementById("responseMsg");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msgDiv.textContent = "Processing...";
+        msgDiv.className = "message";
+
+        const amount = document.getElementById("amount").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+
+        try {
+          const response = await fetch(
+            "https://pesa-ei0q.onrender.com/stkpush",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ amount, phone }),
+            }
+          );
+
+          const data = await response.json();
+
+          if (response.ok) {
+            msgDiv.textContent =
+              data.CustomerMessage || "Payment initiated successfully!";
+            msgDiv.classList.add("success");
+          } else {
+            msgDiv.textContent = data.error || "Payment failed. Try again.";
+            msgDiv.classList.add("error");
+          }
+        } catch (err) {
+          msgDiv.textContent = "Network error. Please try again.";
+          msgDiv.classList.add("error");
+        }
+      });
+    </script>
+  </body>
+</html>
