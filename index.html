@@ -8,86 +8,186 @@
       * {
         box-sizing: border-box;
         font-family: "Poppins", sans-serif;
+        transition: all 0.3s ease;
       }
 
       body {
-        background: #f4f4f9;
+        margin: 0;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100vh;
-        margin: 0;
+        background: radial-gradient(circle at top left, #d4edda, #e9f7ef);
+        padding: 1rem;
       }
 
       .card {
         background: white;
-        padding: 2rem;
-        border-radius: 1rem;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 1.2rem;
+        padding: 2.5rem 2rem;
         width: 100%;
-        max-width: 400px;
+        max-width: 420px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* animated glowing circle icon */
+      .icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #28a745, #1e7e34);
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 25px rgba(40, 167, 69, 0.5);
+        position: relative;
+      }
+
+      .icon::after {
+        content: "";
+        position: absolute;
+        width: 110%;
+        height: 110%;
+        border-radius: 50%;
+        border: 2px solid rgba(40, 167, 69, 0.4);
+        animation: pulse 1.6s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1.4);
+          opacity: 0;
+        }
+      }
+
+      .icon svg {
+        width: 40px;
+        height: 40px;
+        fill: white;
       }
 
       h2 {
-        text-align: center;
-        color: #222;
-        margin-bottom: 1.5rem;
+        color: #1c7430;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      p.subtitle {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 1.8rem;
       }
 
       label {
         display: block;
+        text-align: left;
         margin-bottom: 0.5rem;
-        color: #555;
+        font-weight: 500;
+        color: #333;
       }
 
       input {
         width: 100%;
-        padding: 0.75rem;
+        padding: 0.75rem 1rem;
         margin-bottom: 1.2rem;
         border: 1px solid #ccc;
         border-radius: 0.5rem;
         outline: none;
-        transition: 0.3s;
+        font-size: 1rem;
       }
 
       input:focus {
         border-color: #28a745;
+        box-shadow: 0 0 6px rgba(40, 167, 69, 0.4);
       }
 
       button {
         width: 100%;
-        padding: 0.75rem;
-        background-color: #28a745;
+        padding: 0.9rem;
+        background: linear-gradient(135deg, #28a745, #218838);
         color: white;
         border: none;
-        border-radius: 0.5rem;
+        border-radius: 0.6rem;
         font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
         cursor: pointer;
-        transition: 0.3s;
       }
 
       button:hover {
-        background-color: #218838;
+        background: linear-gradient(135deg, #34ce57, #1e7e34);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
       }
 
       .message {
-        margin-top: 1rem;
+        margin-top: 1.3rem;
         text-align: center;
         font-weight: 500;
+        padding: 0.8rem;
+        border-radius: 0.5rem;
       }
 
       .success {
-        color: #28a745;
+        background: #d4edda;
+        color: #155724;
       }
 
       .error {
-        color: #dc3545;
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      footer {
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 1.8rem;
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          padding: 2rem 1.5rem;
+        }
+        h2 {
+          font-size: 1.4rem;
+        }
       }
     </style>
   </head>
   <body>
     <div class="card">
+      <div class="icon">
+        <!-- simple svg money icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path
+            d="M256 32C132.3 32 32 132.3 32 256s100.3 224 224 224 224-100.3 224-224S379.7 32 256 32zm0 64a160 160 0 110 320 160 160 0 010-320zm0 48c-8.8 0-16 7.2-16 16v16h-24c-8.8 0-16 7.2-16 16v16c0 8.8 7.2 16 16 16h56c4.4 0 8 3.6 8 8v8c0 4.4-3.6 8-8 8h-24c-30.9 0-56 25.1-56 56v8c0 30.9 25.1 56 56 56v16c0 8.8 7.2 16 16 16s16-7.2 16-16v-16h24c8.8 0 16-7.2 16-16v-16c0-8.8-7.2-16-16-16h-56c-4.4 0-8-3.6-8-8v-8c0-4.4 3.6-8 8-8h24c30.9 0 56-25.1 56-56v-8c0-30.9-25.1-56-56-56v-16c0-8.8-7.2-16-16-16z"
+          />
+        </svg>
+      </div>
+
       <h2>Mpesa STK Push</h2>
+      <p class="subtitle">Quick, secure, and seamless mobile payments.</p>
+
       <form id="stkForm">
         <label for="amount">Amount (Ksh)</label>
         <input
@@ -111,6 +211,8 @@
       </form>
 
       <div class="message" id="responseMsg"></div>
+
+      <footer>© 2025 Pesa Gateway | Powered by M-Pesa API</footer>
     </div>
 
     <script>
